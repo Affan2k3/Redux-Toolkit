@@ -1,16 +1,15 @@
 "use client";
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { UseDispatch } from "react-redux";
+import React from "react";
+// import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../redux/slice";
+import { useDispatch, useSelector } from "react-redux";
 export default function DisplayUsers() {
-  const [id, setId] = useState("");
   const dispatch = useDispatch();
-  const userData = useSelector((data: any) => data.users);
-
-  //   const userDispatch = (id: any) => {
-  //     );
-  //   };
+  const userData = useSelector((data: any) => {
+    console.log(data);
+    return data.usersData.users;
+  });
+  console.log("UUUU", userData);
 
   return (
     <div className="w-[30%]">
