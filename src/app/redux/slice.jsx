@@ -1,15 +1,18 @@
 
 // Actions and Reducers both in Slice
 
-const { createSlice, nanoid, current } = require("@reduxjs/toolkit");
+
+const { createSlice, nanoid, current, createAsyncThunk } = require("@reduxjs/toolkit");
 
 let state = localStorage.getItem("users") ? JSON.parse(localStorage.getItem("users")) : [];
 const initialState = {
-    users: state
+    users: state,
+    userApiData:[]
 }
 
-export const fetchApiUsers = createAsyncThunk("fetchApiUsers", async () => {
-    const result = await fetch('https://jsonplaceholder.typicode.com/users')
+export const fetchApiUsers = createAsyncThunk("fetchApi", async () => {
+
+    const result = await fetch("https://jsonplaceholder.typicode.com/users")
     return result.json()
 })
 
@@ -40,12 +43,20 @@ const Slice = createSlice({
             localStorage.setItem("users",JSON.stringify(data))
         }
     },
+  
     extraReducers: (builder) => {
-        builder.addCase(fetchApiUsers.fulfilled, (state, action)=>{
+        builder.addCase(fetchApiUsers.fulfilled, (state, action) => {
+      
             state.isLoading = false,
-                state.userApiData=action.payload
-        })
+                state.userApiData = action.payload
+         }
+        
+        )
+
+
+
     }
+
 });
 
 export const { addUser, removeUser } = Slice.actions
